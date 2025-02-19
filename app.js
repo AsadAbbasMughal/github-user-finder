@@ -47,14 +47,26 @@ function fetchAndDisplay(url, containerId, listId) {
         if (!container)
             return;
         container.innerHTML = '';
-        data.forEach((user) => {
-            const li = document.createElement('li');
-            li.innerHTML = `<div class="flex items-center space-x-2">
-            <img src="${user.avatar_url}" class="w-10 h-10 rounded-full" alt="Avatar">
-            <a href="${user.html_url}" target="_blank" class="text-blue-600 hover:underline">${user.login}</a>
-        </div>`;
-            container.appendChild(li);
-        });
+        if (url === 'repos') {
+            data.forEach((repo) => {
+                console.log(repo);
+                const li = document.createElement('li');
+                li.innerHTML = `<div class="flex items-center space-x-2">
+                <a href="${repo.html_url}" target="_blank" class="text-blue-600 hover:underline">${repo.name}</a>
+            </div>`;
+                container.appendChild(li);
+            });
+        }
+        else {
+            data.forEach((user) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<div class="flex items-center space-x-2">
+                <img src="${user.avatar_url}" class="w-10 h-10 rounded-full" alt="Avatar">
+                <a href="${user.html_url}" target="_blank" class="text-blue-600 hover:underline">${user.login}</a>
+            </div>`;
+                container.appendChild(li);
+            });
+        }
         (_a = document.getElementById('repoList')) === null || _a === void 0 ? void 0 : _a.classList.add('hidden');
         (_b = document.getElementById('followersList')) === null || _b === void 0 ? void 0 : _b.classList.add('hidden');
         (_c = document.getElementById('followingList')) === null || _c === void 0 ? void 0 : _c.classList.add('hidden');

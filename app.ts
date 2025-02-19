@@ -2,8 +2,6 @@ let searchUser = document.getElementById('searchUser')! as HTMLInputElement;
 let searchBtn = document.getElementById('searchBtn')! as HTMLButtonElement; 
 
 searchBtn.addEventListener('click', async () => {
-
-    
     let username = searchUser.value.trim(); 
 
     if (!username) {
@@ -36,6 +34,7 @@ async function fetchAndDisplay(url: string, containerId: string, listId: string)
     if (!username) return;
 
     const response = await fetch(`https://api.github.com/users/${username}/${url}`);
+
     const data = await response.json();
 
     const container = document.getElementById(listId);
@@ -43,14 +42,26 @@ async function fetchAndDisplay(url: string, containerId: string, listId: string)
 
     container.innerHTML = '';
 
-    data.forEach((user: any) => {
-        const li = document.createElement('li');
-        li.innerHTML = `<div class="flex items-center space-x-2">
-            <img src="${user.avatar_url}" class="w-10 h-10 rounded-full" alt="Avatar">
-            <a href="${user.html_url}" target="_blank" class="text-blue-600 hover:underline">${user.login}</a>
-        </div>`;
-        container.appendChild(li);
-    });
+    if (url === 'repos') {
+        
+        data.forEach((repo: any) => {
+            console.log(repo);
+            const li = document.createElement('li');
+            li.innerHTML = `<div class="flex items-center space-x-2">
+                <a href="${repo.html_url}" target="_blank" class="text-blue-600 hover:underline">${repo.name}</a>
+            </div>`;
+            container.appendChild(li);
+        });
+    } else {
+        data.forEach((user: any) => {
+            const li = document.createElement('li');
+            li.innerHTML = `<div class="flex items-center space-x-2">
+                <img src="${user.avatar_url}" class="w-10 h-10 rounded-full" alt="Avatar">
+                <a href="${user.html_url}" target="_blank" class="text-blue-600 hover:underline">${user.login}</a>
+            </div>`;
+            container.appendChild(li);
+        });
+    }
 
     document.getElementById('repoList')?.classList.add('hidden');
     document.getElementById('followersList')?.classList.add('hidden');
@@ -69,4 +80,6 @@ document.getElementById('following')?.addEventListener('click', async () => {
 
 document.getElementById('repos')?.addEventListener('click', async () => {
     await fetchAndDisplay('repos', 'repoList', 'repoContainer');
+
+
 });
