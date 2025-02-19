@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Finder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6">
+    <div class="w-full max-w-xl bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold text-center mb-4">GitHub Finder</h1>
+        
+        <input 
+            type="text" 
+            id="searchUser" 
+            class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" 
+            placeholder="Enter GitHub Username...">
+        
+        <button 
+            id="searchBtn" 
+            class="w-full mt-3 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">
+            Search
+        </button>
+        
+        <div id="profile" class="mt-6 hidden p-4 bg-gray-50 rounded-lg shadow">
+            <div class="flex items-center space-x-4">
+                <img id="avatar" class="w-20 h-20 rounded-full border" alt="User Avatar">
+                <div>
+                    <h2 id="name" class="text-xl font-semibold"></h2>
+                    <a id="profileLink" target="_blank" class="text-blue-500 hover:underline"></a>
+                </div>
+            </div>
+            <p id="bio" class="mt-2 text-gray-700"></p>
+            <div class="mt-4 flex space-x-3">
+                <span id="followers" class="px-3 py-1 bg-blue-200 rounded-full text-blue-900 cursor-pointer"></span>
+                <span id="following" class="px-3 py-1 bg-green-200 rounded-full text-green-900 cursor-pointer"></span>
+                <span id="repos" class="px-3 py-1 bg-yellow-200 rounded-full text-yellow-900 cursor-pointer"></span>
+            </div>
+            <div id="repoList" class="mt-4 hidden bg-white p-4 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold">Repositories:</h3>
+                <ul id="repoContainer" class="mt-2 space-y-2"></ul>
+            </div>
+            <div id="followersList" class="mt-4 hidden bg-white p-4 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold">Followers:</h3>
+                <ul id="followersContainer" class="mt-2 space-y-2"></ul>
+            </div>
+            <div id="followingList" class="mt-4 hidden bg-white p-4 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold">Following:</h3>
+                <ul id="followingContainer" class="mt-2 space-y-2"></ul>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- <script>
+        document.getElementById('searchBtn').addEventListener('click', async () => {
+            const username = document.getElementById('searchUser').value;
+            if (!username) return;
+            
+            const response = await fetch(`https://api.github.com/users/${username}`);
+            const data = await response.json();
+            
+            if (data.message === 'Not Found') {
+                alert('User not found');
+                return;
+            }
+            
+            document.getElementById('profile').classList.remove('hidden');
+            document.getElementById('avatar').src = data.avatar_url;
+            document.getElementById('name').textContent = data.name || data.login;
+            document.getElementById('bio').textContent = data.bio || 'No bio available';
+            document.getElementById('profileLink').href = data.html_url;
+            document.getElementById('profileLink').textContent = 'View Profile';
+            document.getElementById('followers').textContent = `Followers: ${data.followers}`;
+            document.getElementById('following').textContent = `Following: ${data.following}`;
+            document.getElementById('repos').textContent = `Repos: ${data.public_repos}`;
+        });
+    </script> -->
+
+    <script src="app.js"></script>
+</body>
+</html>
